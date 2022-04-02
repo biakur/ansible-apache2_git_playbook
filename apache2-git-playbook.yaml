@@ -1,0 +1,23 @@
+#Frist play 'Setup an Apache Webserver on the Ubuntu-Client'
+- name: Update web servers for ubuntu
+  hosts: ubuntu-client
+  remote_user: root
+  tasks:
+    - name: Install prerequisites
+      apt: name={{ item }} update_cache=yes state=latest force_apt_get=yes
+      loop: [ 'aptitude' ]
+
+    - name: Install Apache
+      apt: name=apache2 update_cache=yes state=latest
+# This is simple apache2 with out index.html
+# My Second play
+- name: Install Git
+  hosts: ubuntu-client
+  gather_facts: false
+  become: true
+  tasks:
+   - name: Install git
+     apt:
+        name: git
+        state: present
+        update_cache: yes
